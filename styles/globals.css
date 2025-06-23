@@ -1,0 +1,262 @@
+/* NextJS TailwindCSS 2.0 configuration
+NextJs/styles/globals.css
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-lato {
+  font-family: var(--font-lato), sans-serif;
+}
+
+.font-libre-bodoni {
+  font-family: var(--font-libre-bodoni), serif;
+}
+.job-link {
+  text-decoration: underline;
+  position: relative;
+  padding-right: 1.5em; /* Espace pour l'icône */
+  margin-top: -1em;
+  
+}
+
+
+
+
+@layer components {
+  .btn {
+    @apply font-lato hover:bg-[#4C4442] bg-[#7E6E64] text-slate-50 whitespace-nowrap inline-flex my-2 px-9 py-3 uppercase cursor-pointer  hover:text-white text-sm transition-all;
+  }
+  .btninvert{
+    @apply font-lato hover:bg-[#7E6E64] bg-slate-100  text-gray-500 whitespace-nowrap inline-block my-2 px-20 py-3 uppercase cursor-pointer  hover:text-white text-sm transition-all;
+
+  }
+  
+}
+ul{
+
+}
+li{
+  
+
+}
+
+
+img.logo-img {
+  margin: 0 auto;
+  
+  height: auto;
+  width: 220px;
+  padding: 1em;
+}
+img.logo-img.logo-img-big{
+  width: 300px;
+}
+img.logo-img.logo-img-small{
+  width: 180px;
+}
+.text-inside {
+  padding: 3em 5em;
+}
+.text-inside-left{
+  padding: 3em 3em 3em 0
+}
+.text-inside-right{
+  padding: 3em 0 3em 3em 
+}
+.text-inside-left .text-left,
+.text-inside-right .text-left{
+  text-align: justify;
+}
+.inside-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1, h2, h3, h4, h5 {
+  @apply font-libre-bodoni;
+  
+}
+h1, h2, h3, h4, h5 {
+  font-weight: 400
+}
+.text-inside h2,
+.text-inside h3{
+  margin-bottom: 0.8em
+}
+.text-inside .btn{
+  margin-top: 1.6em;
+}
+h5{
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-size: 1em!important;
+  font-weight: 300!important;
+}
+p, li, span {
+  @apply font-lato;
+}
+
+body{
+  
+}
+.images2blocks{
+  /*min-height: 550px;*/
+}
+/* Neutra fonts face 
+@font-face {
+  font-family: 'NeutraBold';
+  src: url('/fonts/Neutra2Text-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NeutraDemi';
+  src: url('/fonts/Neutra2Text-Demi.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NeutraLight';
+  src: url('/fonts/Neutra2Text-Light.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+.logoLink{
+
+}
+.logoLinkImg{
+}
+.homeCover h2{
+  color: #fff;
+}
+.homeCover img.object-cover{
+
+}
+.homeCover h2{
+  text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.6);
+  font-weight: 700;
+  font-size: 2.8em;
+}
+.homeCover p{
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-weight: 300;
+  font-size: 0.9em;
+  text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.6);
+
+}
+h2, h3, h4{
+  font-weight: 700;
+}
+.navbar.scrolled .langSwitcher a{
+  color: #4C4442;
+  border: 0 transparent;
+  @apply font-lato;
+}
+.navbar .langSwitcher a{
+  color: #fff;
+  border: 0 transparent;
+  @apply font-lato;
+}
+.navbar.scrolled .langSwitcher span{
+  color: #4C4442;
+  @apply font-lato;
+}
+.navbar .langSwitcher span{
+  color: #fff;
+  @apply font-lato;
+}
+
+.navbar .main-menu .relative.group{
+  display: none;
+}
+
+.logoLinkImg{
+  filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, 0.8));
+}
+
+.service1{
+  margin-bottom: -5em;
+}
+strong{
+  font-weight: 700!important;
+}
+.horairesinside{
+  padding-top: 6em
+}
+/* Styles pour les écrans de taille moyenne et supérieure */
+@media (min-width: 768px) {
+  .navbar .container,
+  .navbar .langSwitcher {
+    justify-content: flex-start;
+
+  }
+  .homeCover{
+    justify-content: flex-end;
+    background: linear-gradient(to top right, #7E6E64, transparent);
+
+  }
+  .homeCover h2 {
+    font-size: 2.8em;
+  }
+
+  
+}
+/* Vous pouvez ajouter d'autres styles spécifiques pour mobile ici */
+
+@media (max-width: 767px) {
+
+
+  .mobile-order-first {
+    order: -1 !important;
+  }
+  
+  .mobile-order-last {
+    order: 999 !important;
+  }
+
+  .text-inside-left,
+  .text-inside-right{
+    padding: 2em 1em;
+  }
+  .navbar .container,
+  .navbar .langSwitcher,
+  .navbar .ml-3  {
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.25em;
+  }
+  .navbar .langSwitcher,
+  .navbar .ml-3{
+    margin-top: 2.4em;
+    font-size: 0.85em;
+  }
+  .homeCover{
+    justify-content: center;
+    background: linear-gradient(to top right, rgba(17, 24, 39, 0.8), transparent);
+
+  }
+  .homeCover h2 {
+    font-size: 1.8em;
+  }
+  .navbar .logoLink{
+    margin-bottom: 0.65em;
+  }
+  .service2{                  
+    margin-bottom: -2em;
+  }
+  .horairesinside{
+    margin-top: -2.5em;
+    padding-top: 2em
+  }
+  .horairesimage{
+    margin-top: -6em;
+    padding-bottom: 3em
+  }
+}

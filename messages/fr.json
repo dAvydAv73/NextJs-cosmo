@@ -1,0 +1,15 @@
+{
+    "Index": {
+      "title": "Bonjour le monde!"
+    },
+    "Home": {
+      "Cover": {
+          "Title": "Démonstration de l'internationalisation avec Next.js",
+          "Subtitle": "Cette démo utilise Next.js et le package next-intl pour créer un site web multilingue. Nous explorons également son fonctionnement avec Hygraph.",
+          "CallToAction": "Read about us"
+      }
+    },
+    "NotFoundPage":{
+      "title": "Page 404"
+    }
+  }
