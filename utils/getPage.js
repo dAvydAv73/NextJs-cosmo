@@ -1,3 +1,4 @@
+//PWA/utils/getPage.js
 import { cleanAndTransformBlocks } from "./cleanAndTransformBlocks";
 
 export async function getPage(uri) {

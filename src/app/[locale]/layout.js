@@ -1,6 +1,5 @@
 import {NextIntlClientProvider} from 'next-intl';
 import {unstable_setRequestLocale,getMessages} from 'next-intl/server';
-import { Lato, Libre_Bodoni } from "next/font/google";
 import "../../../styles/globals.css";
 import { getMenu } from "../../../utils/getMenu"; // Une seule importation de getMenu
 import { MainMenu } from "../../../components/MainMenu";
@@ -10,20 +9,7 @@ import { Footer } from '../../../components/Footer';
 
 config.autoAddCss = false;
 
-// Configuration pour les polices Google Fonts
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  display: "swap",
-  variable: "--font-lato",
-});
 
-const libreBodoni = Libre_Bodoni({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  variable: "--font-libre-bodoni",
-});
 
 export default async function RootLayout({ children, params }) {
   const locale = params.locale; // Correction de la destructuration
@@ -37,7 +23,7 @@ export default async function RootLayout({ children, params }) {
   const messages = await getMessages(locale);
 
   return (
-    <html lang={locale} className={`${lato.variable} ${libreBodoni.variable}`}>
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MainMenu
@@ -52,7 +38,7 @@ export default async function RootLayout({ children, params }) {
             {children}
           </div>
         </NextIntlClientProvider>
-        <Footer items={menuData.mainMenuItems} />
+        {/*<Footer items={menuData.mainMenuItems} />*/}
       </body>
     </html>
   );

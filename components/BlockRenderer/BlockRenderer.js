@@ -14,6 +14,10 @@ import { ListItem } from "../ListItem/ListItem";
 import { ListItemContent } from "../ListItemContent/ListItemContent";
 import { Images2Block } from "../Images2Block/Images2Block";
 import { SliderBlock } from "../SliderBlock";
+import { formatDoubleSliderBlock } from "../../utils/formatDoubleSliderBlock";
+import { DoubleSlider } from "../DoubleSlider";
+
+
 import { useEffect } from 'react';
 
 
@@ -23,6 +27,7 @@ export const BlockRenderer = ({ blocks }) => {
     console.log("BlockRenderer mounted with blocks:", blocks);
   }, [blocks]);
   */
+ if (!Array.isArray(blocks)) return null;
   return blocks.map((block, index) => {
     //console.log('Block:', JSON.stringify(block, null, 2)); // Pour le débogage
     // Vérification de sécurité pour block.attributes
@@ -34,6 +39,14 @@ export const BlockRenderer = ({ blocks }) => {
     //console.log(`Custom classes for block ${index}:`, customClasses); // Log pour le débogage
 
     switch (block.name) {
+
+      case "acf/doublesliderblock": {
+        console.log("Bloc brut reçu pour le double slider :", block);
+        const slides = formatDoubleSliderBlock(block);
+        console.log("Slides formatés :", slides);
+
+        return <DoubleSlider slides={slides} />;
+      }
 
       case "acf/tickitem": {
         return (
@@ -270,6 +283,8 @@ export const BlockRenderer = ({ blocks }) => {
     }
     
       default: {
+        console.log("Blocks reçus dans BlockRenderer:", blocks);
+
         console.log(`UNKNOWN BLOCK TYPE at index ${index}:`, block.name);
         return (
           <div key={block.id || `unknown-block-${index}`}>

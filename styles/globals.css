@@ -1,4 +1,4 @@
-/* NextJS TailwindCSS 2.0 configuration
+/* NextJS TailwindCSS configuration
 NextJs/styles/globals.css
 */
 
@@ -6,257 +6,221 @@ NextJs/styles/globals.css
 @tailwind components;
 @tailwind utilities;
 
-.font-lato {
-  font-family: var(--font-lato), sans-serif;
+/* Gotham font-face */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Bold.woff2') format('woff2'),
+       url('/fonts/Gotham-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-.font-libre-bodoni {
-  font-family: var(--font-libre-bodoni), serif;
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Book.woff2') format('woff2'),
+       url('/fonts/Gotham-Book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
-.job-link {
-  text-decoration: underline;
-  position: relative;
-  padding-right: 1.5em; /* Espace pour l'icône */
-  margin-top: -1em;
-  
-}
-
-
-
 
 @layer components {
   .btn {
-    @apply font-lato hover:bg-[#4C4442] bg-[#7E6E64] text-slate-50 whitespace-nowrap inline-flex my-2 px-9 py-3 uppercase cursor-pointer  hover:text-white text-sm transition-all;
+    @apply font-gotham hover:bg-[#4C4442] bg-[#7E6E64] text-slate-50 whitespace-nowrap inline-flex my-2 px-9 py-3 uppercase cursor-pointer hover:text-white text-sm transition-all;
   }
-  .btninvert{
-    @apply font-lato hover:bg-[#7E6E64] bg-slate-100  text-gray-500 whitespace-nowrap inline-block my-2 px-20 py-3 uppercase cursor-pointer  hover:text-white text-sm transition-all;
 
+  .btninvert {
+    @apply font-gotham hover:bg-[#7E6E64] bg-slate-100 text-gray-500 whitespace-nowrap inline-block my-2 px-20 py-3 uppercase cursor-pointer hover:text-white text-sm transition-all;
   }
-  
-}
-ul{
-
-}
-li{
-  
-
 }
 
+/* Font usage */
+h1, h2, h3, h4, h5 {
+  @apply font-gotham font-bold;
+}
+body{
+  background-color: #FAF5E9;
+}
+h5 {
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-size: 1em !important;
+  font-weight: 300 !important;
+}
 
+p, li, span {
+  @apply font-gotham;
+}
+
+/* Logo styles */
 img.logo-img {
   margin: 0 auto;
-  
   height: auto;
   width: 220px;
   padding: 1em;
 }
-img.logo-img.logo-img-big{
+
+img.logo-img.logo-img-big {
   width: 300px;
 }
-img.logo-img.logo-img-small{
+
+img.logo-img.logo-img-small {
   width: 180px;
 }
+
+/* Text content padding */
 .text-inside {
   padding: 3em 5em;
 }
-.text-inside-left{
-  padding: 3em 3em 3em 0
+
+.text-inside-left {
+  padding: 3em 3em 3em 0;
 }
-.text-inside-right{
-  padding: 3em 0 3em 3em 
+
+.text-inside-right {
+  padding: 3em 0 3em 3em;
 }
+
 .text-inside-left .text-left,
-.text-inside-right .text-left{
+.text-inside-right .text-left {
   text-align: justify;
 }
-.inside-img{
+
+.inside-img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-h1, h2, h3, h4, h5 {
-  @apply font-libre-bodoni;
-  
-}
-h1, h2, h3, h4, h5 {
-  font-weight: 400
-}
+
 .text-inside h2,
-.text-inside h3{
-  margin-bottom: 0.8em
+.text-inside h3 {
+  margin-bottom: 0.8em;
 }
-.text-inside .btn{
+
+.text-inside .btn {
   margin-top: 1.6em;
 }
-h5{
-  opacity: 0.6;
-  text-transform: uppercase;
-  font-size: 1em!important;
-  font-weight: 300!important;
-}
-p, li, span {
-  @apply font-lato;
+
+.job-link {
+  text-decoration: underline;
+  position: relative;
+  padding-right: 1.5em;
+  margin-top: -1em;
 }
 
-body{
-  
-}
-.images2blocks{
-  /*min-height: 550px;*/
-}
-/* Neutra fonts face 
-@font-face {
-  font-family: 'NeutraBold';
-  src: url('/fonts/Neutra2Text-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NeutraDemi';
-  src: url('/fonts/Neutra2Text-Demi.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NeutraLight';
-  src: url('/fonts/Neutra2Text-Light.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-*/
-.logoLink{
-
-}
-.logoLinkImg{
-}
-.homeCover h2{
-  color: #fff;
-}
-.homeCover img.object-cover{
-
-}
-.homeCover h2{
-  text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.6);
-  font-weight: 700;
-  font-size: 2.8em;
-}
-.homeCover p{
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-weight: 300;
-  font-size: 0.9em;
-  text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.6);
-
-}
-h2, h3, h4{
-  font-weight: 700;
-}
-.navbar.scrolled .langSwitcher a{
+/* Navbar & language switcher */
+.navbar.scrolled .langSwitcher a {
   color: #4C4442;
   border: 0 transparent;
-  @apply font-lato;
-}
-.navbar .langSwitcher a{
-  color: #fff;
-  border: 0 transparent;
-  @apply font-lato;
-}
-.navbar.scrolled .langSwitcher span{
-  color: #4C4442;
-  @apply font-lato;
-}
-.navbar .langSwitcher span{
-  color: #fff;
-  @apply font-lato;
+  @apply font-gotham;
 }
 
-.navbar .main-menu .relative.group{
+.navbar .langSwitcher a {
+  color: #fff;
+  border: 0 transparent;
+  @apply font-gotham;
+}
+
+.navbar.scrolled .langSwitcher span {
+  color: #4C4442;
+  @apply font-gotham;
+}
+
+.navbar .langSwitcher span {
+  color: #fff;
+  @apply font-gotham;
+}
+
+.navbar .main-menu .relative.group {
   display: none;
 }
 
-.logoLinkImg{
+.logoLinkImg {
   filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, 0.8));
 }
 
-.service1{
+.service1 {
   margin-bottom: -5em;
 }
-strong{
-  font-weight: 700!important;
+
+strong {
+  font-weight: 700 !important;
 }
-.horairesinside{
-  padding-top: 6em
+
+.horairesinside {
+  padding-top: 6em;
 }
-/* Styles pour les écrans de taille moyenne et supérieure */
+
+/* Media queries */
 @media (min-width: 768px) {
   .navbar .container,
   .navbar .langSwitcher {
     justify-content: flex-start;
-
   }
-  .homeCover{
+
+  .homeCover {
     justify-content: flex-end;
     background: linear-gradient(to top right, #7E6E64, transparent);
-
   }
+
   .homeCover h2 {
     font-size: 2.8em;
   }
-
-  
 }
-/* Vous pouvez ajouter d'autres styles spécifiques pour mobile ici */
 
 @media (max-width: 767px) {
-
-
   .mobile-order-first {
     order: -1 !important;
   }
-  
+
   .mobile-order-last {
     order: 999 !important;
   }
 
   .text-inside-left,
-  .text-inside-right{
+  .text-inside-right {
     padding: 2em 1em;
   }
+
   .navbar .container,
   .navbar .langSwitcher,
-  .navbar .ml-3  {
+  .navbar .ml-3 {
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 0.25em;
   }
+
   .navbar .langSwitcher,
-  .navbar .ml-3{
+  .navbar .ml-3 {
     margin-top: 2.4em;
     font-size: 0.85em;
   }
-  .homeCover{
+
+  .homeCover {
     justify-content: center;
     background: linear-gradient(to top right, rgba(17, 24, 39, 0.8), transparent);
-
   }
+
   .homeCover h2 {
     font-size: 1.8em;
   }
-  .navbar .logoLink{
+
+  .navbar .logoLink {
     margin-bottom: 0.65em;
   }
-  .service2{                  
+
+  .service2 {
     margin-bottom: -2em;
   }
-  .horairesinside{
+
+  .horairesinside {
     margin-top: -2.5em;
-    padding-top: 2em
+    padding-top: 2em;
   }
-  .horairesimage{
+
+  .horairesimage {
     margin-top: -6em;
-    padding-bottom: 3em
+    padding-bottom: 3em;
   }
 }

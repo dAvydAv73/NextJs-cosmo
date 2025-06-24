@@ -22,12 +22,8 @@ module.exports = {
         slideRight: "slideRight 1s ease-in",
         slideLeft: "slideLeft 1s ease-in",
       },
-      fontFamily: {
-        heading: "var(--font-dmserifdisplay)",
-        body: ['NeutraLight', 'sans-serif'],
-        'neutra-bold': ['NeutraBold', 'sans-serif'],
-        'neutra-demi': ['NeutraDemi', 'sans-serif'],
-        'neutra-light': ['NeutraLight', 'sans-serif'],
+     fontFamily: {
+      gotham: ['Gotham', 'sans-serif'],
       },
       width: {
         'logo-sm': '200px',

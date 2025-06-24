@@ -1,3 +1,4 @@
+//NEXTJS/utils/getPageStaticProps.js
 import { gql } from "@apollo/client";
 import client from "client";
 import { cleanAndTransformBlocks } from "./cleanAndTransformBlocks";
