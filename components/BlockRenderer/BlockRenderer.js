@@ -16,6 +16,8 @@ import { Images2Block } from "../Images2Block/Images2Block";
 import { SliderBlock } from "../SliderBlock";
 import { formatDoubleSliderBlock } from "../../utils/formatDoubleSliderBlock";
 import { DoubleSlider } from "../DoubleSlider";
+import { parseMenusFromFlatData } from "../../utils/parseFlatACF";
+import CarteMenu  from "../CarteMenu/CarteMenu";
 
 
 import { useEffect } from 'react';
@@ -40,12 +42,20 @@ export const BlockRenderer = ({ blocks }) => {
 
     switch (block.name) {
 
-      case "acf/doublesliderblock": {
-        console.log("Bloc brut reçu pour le double slider :", block);
-        const slides = formatDoubleSliderBlock(block);
-        console.log("Slides formatés :", slides);
+      case "cosmopolite/blockcartekmenu": {
+        const { data = {} } = block.attributes || {};
+        const parsedMenus = parseMenusFromFlatData(data);
 
-        return <DoubleSlider slides={slides} />;
+        return (
+          <div key={block.id} className="w-full">
+            <CarteMenu menus={parsedMenus} />
+          </div>
+        );
+      }
+
+      case "acf/doublesliderblock": {
+        const slides = formatDoubleSliderBlock(block);
+        return <DoubleSlider key={block.id} slides={slides} />;
       }
 
       case "acf/tickitem": {

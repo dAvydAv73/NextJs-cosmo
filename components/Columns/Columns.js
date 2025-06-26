@@ -14,7 +14,7 @@ export const Columns = ({
       style={{ color: textColor, backgroundColor }}
       id={customId}
     >
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-center items-center">
+      <div className="container mx-auto flex flex-col md:flex-row justify-center items-center">
         {React.Children.map(children, (child, index) => (
           <React.Fragment key={child.key || `column-${index}`}>
             {React.cloneElement(child, {

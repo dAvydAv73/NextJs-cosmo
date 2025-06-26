@@ -1,169 +1,83 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ButtonLink } from "../ButtonLink";
 import Image from "next/image";
-import LogoIcon from "../../public/img/philippe_chevrier_officiel_logo.svg";
-import LogoIconWhite from "../../public/img/philippe_chevrier_officiel_logo_white.svg";
-
+import { usePathname } from "next/navigation";
+import { Megamenu } from "./Megamenu";
+import LogoIcon from "../../public/img/le-cosmo_black.svg";
+import LogoIconWhite from "../../public/img/le-cosmo_creme.svg";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUtensils, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useLocale } from "next-intl";
 
-
-
-export const MainMenu = ({
-  items,
-
-}) => {
+export const MainMenu = ({ items, websiteSettings }) => {
   const locale = useLocale();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // État pour gérer l'ouverture du menu
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    //console.log("Menu Items received:", items);
-  }, [items]);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerWidth >= 640) {
-        const currentScrollY = window.scrollY;
-        setIsScrolled(currentScrollY > 50);
-      } else {
-        setIsScrolled(true);
-      }
+      setHasScrolled(window.scrollY > 10); // tu peux ajuster le seuil
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
-
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
-  };
+  const isHomePage = pathname === "/" || pathname === `/${locale}`;
 
   return (
     <>
       <div
-        className={`navbar fixed left-0 right-0 bottom-0 sm:top-0 sm:bottom-auto z-30 transition-all duration-300 
-        ${isScrolled 
-          ? 'bg-neutral-50 border-t sm:border-b border-gray-300 shadow-md scrolled' 
-          : 'bg-transparent border-t sm:border-b border-transparent'
-        }
-        h-[110px] sm:h-[140px]`}
-      >
-        <div className="container mx-auto px-5 flex items-center justify-between h-[110px] sm:h-[140px]">
-          <div className="flex-1">
-            <LanguageSwitcher />
-          </div>
-          <div
-            className={`logoLink flex-3 transition-opacity duration-300 ${
-              isScrolled ? "opacity-100" : "opacity-0"
+          className={`navbar fixed left-0 right-0 top-0 z-30 h-[140px] transition-all duration-300 ${
+            isHomePage
+              ? "bg-transparent"
+              : `bg-[#FAF5E9] ${hasScrolled ? "shadow-md" : ""}`
+          }`}
+        >
+        <div className="container mx-auto px-5 flex items-center justify-between h-full">
+          {/* Megamenu icon à gauche */}
+          <button
+            onClick={toggleMenu}
+            className={`text-2xl mr-4 transition-colors duration-200 ${
+              isHomePage ? "text-[#FAF5E9]" : "text-black"
             }`}
           >
-            <a href="/" title="Philippe Chevrier - Home">
+            <FontAwesomeIcon icon={faBars} />
+          </button>
+
+          {/* Logo au centre */}
+          <div className="logoLink flex justify-center">
+            <a href="/" title="Accueil - Le Cosmopolite">
               <Image
                 priority
-                src={LogoIcon}
+                src={isHomePage ? LogoIconWhite : LogoIcon}
                 height={90}
                 width={260}
                 className="w-logo-sm sm:w-logo-md lg:w-logo-lg h-auto"
-                alt="Philippe Chevrier"
+                alt="Le Cosmopolite"
               />
             </a>
           </div>
-          <div className="flex-1 flex justify-end items-center main-menu">
-            {(items || []).map((item) => (
-              <div key={item.id} className="relative group animate-slideLeft">
-                <a
-                  href={item.destination}
-                  className={`p-5 block transition-colors duration-300 px-1 py-1 ${
-                    isScrolled ? "text-[#4C4442]" : "text-white drop-shadow-md"
-                  }`}
-                >
-                  {item.label}
-                </a>
-                {!!item.subMenuItems?.length && (
-                  <div className="group-hover:block hidden bg-slate-800 text-right absolute right-0 top-full -mt-3">
-                    {item.subMenuItems.map((subMenuItem) => (
-                      <a
-                        key={subMenuItem.id}
-                        href={subMenuItem.destination}
-                        className="block whitespace-nowrap p-5 hover:bg-slate-700 text-white"
-                      >
-                        {subMenuItem.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            
-            <button
-              onClick={toggleMenu}
-              className={`ml-4 text-2xl ${
-                isScrolled ? "text-[#4C4442]" : "text-white"
-              }`}
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </button>
+
+          {/* Language switcher à droite */}
+          <div className="flex-1 flex justify-end items-center text-sm text-black">
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
 
-      {/* Full-screen menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-[#4C4442] bg-opacity-95 z-40 flex flex-col items-center justify-center text-white">
-          <button
-            onClick={toggleMenu}
-            className="absolute top-5 right-5 text-3xl text-white"
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-          <Image
-            src={LogoIconWhite}
-            height={135}
-            width={390}
-            className="mb-16"
-            alt="Philippe Chevrier"
-          />
-          <nav>
-            <ul className="space-y-4 text-center text-base">
-            {(items || []).map((item) => (
-              <div key={item.id} className="relative group ">
-                <a
-                  href={item.destination?.url || '#'} // Ajout de la vérification
-                  className={`p-5 block transition-colors duration-300 px-1 py-1 text-white uppercase font-lato tracking-wider"
-                  }`}
-                >
-                  {item.label}
-                </a>
-                {item.subMenuItems?.length > 0 && (
-                  <div className="group-hover:block hidden bg-slate-800 text-right absolute right-0 top-full -mt-3">
-                    {item.subMenuItems.map((subMenuItem) => (
-                      <a
-                        key={subMenuItem.id}
-                        href={subMenuItem.destination?.url || '#'}
-                        className="block whitespace-nowrap p-5 hover:bg-slate-700 text-white"
-                      >
-                        {subMenuItem.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            </ul>
-          </nav>
-        </div>
+        <Megamenu
+          items={items}
+          settings={websiteSettings}
+          onClose={toggleMenu}
+        />
       )}
     </>
   );

@@ -1,3 +1,4 @@
+//NextJs/utils/getMenu.js
 export const getMenu = async (locale = 'en') => {
   const params = {
     query: `

@@ -39,6 +39,7 @@ export default async function Home({ params: { locale } }) {
   }
 }
 export async function generateMetadata({ params: { locale } }) {
+
   unstable_setRequestLocale(locale);
 
   const slug = locale === 'en' ? "/home" : "/";
@@ -100,4 +101,8 @@ export async function generateMetadata({ params: { locale } }) {
       description: "",
     };
   }
+}
+
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }

@@ -1,3 +1,4 @@
+//NextJS/src/app/[locale]/api/revalidate/route.js
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 

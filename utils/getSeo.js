@@ -1,26 +1,36 @@
+import { slugMapEnToWp } from "./slugMap"; // 👈 mapping externe
 
+export const getSeo = async (uri, locale = "fr") => {
+  const language = locale.toUpperCase();
 
-export const getSeo = async (uri) => {
+  let effectiveUri = uri;
+
+  // Réécriture du slug côté EN si défini dans le mapping
+  if (locale === "en" && slugMapEnToWp[uri]) {
+    effectiveUri = slugMapEnToWp[uri];
+  }
+
   const params = {
     query: `
-    query SeoQuery($uri: String!) {
-      nodeByUri(uri: $uri) {
-        ... on Page {
-          seo {
-            title
-            metaDesc
-            opengraphTitle
-            opengraphDescription
-            opengraphImage {
-              sourceUrl
+      query SeoQuery($uri: String!, $language: LanguageCodeEnum!) {
+        nodeByUri(uri: $uri, language: $language) {
+          ... on Page {
+            seo {
+              title
+              metaDesc
+              opengraphTitle
+              opengraphDescription
+              opengraphImage {
+                sourceUrl
+              }
             }
           }
         }
       }
-    }
-  `,
+    `,
     variables: {
-      uri,
+      uri: effectiveUri,
+      language,
     },
   };
 
@@ -31,8 +41,9 @@ export const getSeo = async (uri) => {
     },
     body: JSON.stringify(params),
   });
+
   const { data } = await response.json();
-  if (!data.nodeByUri) {
+  if (!data?.nodeByUri) {
     return null;
   }
   return data.nodeByUri.seo;

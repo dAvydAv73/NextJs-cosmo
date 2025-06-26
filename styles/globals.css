@@ -53,6 +53,10 @@ p, li, span {
   @apply font-gotham;
 }
 
+/* globals.css */
+.content.not-home {
+  @apply pt-[140px];
+}
 /* Logo styles */
 img.logo-img {
   margin: 0 auto;
@@ -117,7 +121,6 @@ img.logo-img.logo-img-small {
 }
 
 .navbar .langSwitcher a {
-  color: #fff;
   border: 0 transparent;
   @apply font-gotham;
 }
@@ -128,7 +131,6 @@ img.logo-img.logo-img-small {
 }
 
 .navbar .langSwitcher span {
-  color: #fff;
   @apply font-gotham;
 }
 
@@ -151,7 +153,20 @@ strong {
 .horairesinside {
   padding-top: 6em;
 }
+/* animations */
 
+@keyframes fadeOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fadeOverlay {
+  animation: fadeOverlay 0.6s ease-in forwards;
+}
 /* Media queries */
 @media (min-width: 768px) {
   .navbar .container,
