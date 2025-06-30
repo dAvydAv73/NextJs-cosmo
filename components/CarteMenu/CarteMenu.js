@@ -21,24 +21,32 @@ const CarteMenu = ({ menus }) => {
         const visibleEntry = entries.find((entry) => entry.isIntersecting);
         if (visibleEntry) {
           const id = visibleEntry.target.id;
-          console.log("✅ Active section:", id);
           setActiveId(id);
         }
       },
       {
-        rootMargin: "-45% 0px -50% 0px", // centre de l'écran
+        rootMargin: "-45% 0px -50% 0px", // zone centrale
         threshold: 0.1,
       }
     );
 
-    Object.values(sectionRefs.current).forEach((section) => {
+    const sections = Object.values(sectionRefs.current);
+    sections.forEach((section) => {
       if (section) observer.observe(section);
     });
 
+    // ✅ Fix : forcer une section active si aucune visible au démarrage
+    const timeout = setTimeout(() => {
+      if (!activeId && sections.length > 0 && sections[0]?.id) {
+        setActiveId(sections[0].id);
+      }
+    }, 300);
+
     return () => {
-      Object.values(sectionRefs.current).forEach((section) => {
+      sections.forEach((section) => {
         if (section) observer.unobserve(section);
       });
+      clearTimeout(timeout);
     };
   }, [menus]);
 
@@ -90,7 +98,9 @@ const CarteMenu = ({ menus }) => {
                         {item.price && <span>{item.price} .-</span>}
                       </div>
                       {item.description && (
-                        <p className="text-sm text-gray-600">{item.description}</p>
+                        <p className="text-sm text-gray-600">
+                          {item.description}
+                        </p>
                       )}
                       {item.accompagne && (
                         <p className="text-xs italic text-gray-400">

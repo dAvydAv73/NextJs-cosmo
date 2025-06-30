@@ -34,7 +34,9 @@ NextJs/styles/globals.css
     @apply font-gotham hover:bg-[#7E6E64] bg-slate-100 text-gray-500 whitespace-nowrap inline-block my-2 px-20 py-3 uppercase cursor-pointer hover:text-white text-sm transition-all;
   }
 }
-
+html {
+  scroll-behavior: smooth;
+}
 /* Font usage */
 h1, h2, h3, h4, h5 {
   @apply font-gotham font-bold;
