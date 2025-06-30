@@ -55,7 +55,7 @@ p, li, span {
 
 /* globals.css */
 .content.not-home {
-  @apply pt-[140px];
+  @apply pt-[100px] lg:pt-[140px];
 }
 /* Logo styles */
 img.logo-img {
@@ -208,7 +208,6 @@ strong {
 
   .navbar .langSwitcher,
   .navbar .ml-3 {
-    margin-top: 2.4em;
     font-size: 0.85em;
   }
 

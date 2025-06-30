@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState, useRef } from "react";
 
 const slugify = (str) =>
@@ -45,7 +47,7 @@ const CarteMenu = ({ menus }) => {
   return (
     <div className="carte-menu px-4">
       {/* Navigation sticky */}
-      <nav className="sticky top-[140px] z-20 bg-[#FAF5E9] py-6 mb-12 border-b border-gray-300">
+      <nav className="sticky lg:h-[140px] h-[100px] z-20 bg-[#FAF5E9] py-4 mb-6 border-b border-gray-300">
         <ul className="flex flex-wrap gap-4 justify-center text-sm font-bold">
           {menus.map((menu, i) => {
             const slug = slugify(menu.title);
@@ -74,7 +76,7 @@ const CarteMenu = ({ menus }) => {
             key={i}
             id={slug}
             ref={(el) => (sectionRefs.current[slug] = el)}
-            className="mb-12 scroll-mt-[250px] min-h-[400px]"
+            className="mb-12 scroll-mt-[160px] min-h-[300px]"
           >
             <h2 className="text-4xl font-bold mb-4 uppercase">{menu.title}</h2>
             {menu.sections.map((section, j) => (

@@ -1,3 +1,4 @@
+//nextJs/compoenent/DoubleSlider/DoubleSlider.js
 "use client";
 import { useRef, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
@@ -48,7 +49,7 @@ export const DoubleSlider = ({ slides }) => {
     // Sortie image actuelle
     tl.to(currentImg, {
       x: "-150vw",
-      duration: 1.2,
+      duration: 0.8,
       ease: "none",
       zIndex: 28,
     }, 0);
@@ -56,7 +57,7 @@ export const DoubleSlider = ({ slides }) => {
     // Entrée image suivante
     tl.to(nextImg, {
       x: "60vw",
-      duration: 1.2,
+      duration: 0.8,
       ease: "none",
       zIndex: 30,
     }, 0);
@@ -64,13 +65,13 @@ export const DoubleSlider = ({ slides }) => {
     // Scroll vertical contenu + bg
     tl.to(bgRef.current, {
       y: `-${newIndex * 100}vh`,
-      duration: 1.2,
+      duration: 0.8,
       ease: "none",
     }, 0);
 
     tl.to(slideContentRef.current, {
       y: `-${newIndex * 100}vh`,
-      duration: 1.2,
+      duration: 0.8,
       ease: "none",
     }, 0);
 

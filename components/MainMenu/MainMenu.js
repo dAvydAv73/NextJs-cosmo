@@ -34,7 +34,7 @@ export const MainMenu = ({ items, websiteSettings }) => {
   return (
     <>
       <div
-          className={`navbar fixed left-0 right-0 top-0 z-30 h-[140px] transition-all duration-300 ${
+          className={`navbar fixed left-0 right-0 top-0 z-30 lg:h-[140px] h-[100px] transition-all duration-300 ${
             isHomePage
               ? "bg-transparent"
               : `bg-[#FAF5E9] ${hasScrolled ? "shadow-md" : ""}`
@@ -51,22 +51,23 @@ export const MainMenu = ({ items, websiteSettings }) => {
             <FontAwesomeIcon icon={faBars} />
           </button>
 
-          {/* Logo au centre */}
-          <div className="logoLink flex justify-center">
-            <a href="/" title="Accueil - Le Cosmopolite">
-              <Image
-                priority
-                src={isHomePage ? LogoIconWhite : LogoIcon}
-                height={90}
-                width={260}
-                className="w-logo-sm sm:w-logo-md lg:w-logo-lg h-auto"
-                alt="Le Cosmopolite"
-              />
-            </a>
-          </div>
+          {/* Logo */}
+          <div className="flex items-center justify-center h-full">
+          <a href="/" className="block h-full flex items-center">
+            <Image
+              priority
+              src={isHomePage ? LogoIconWhite : LogoIcon}
+              alt="Le Cosmopolite"
+              className="h-[60px] sm:h-[70px] lg:h-[80px] max-w-[220px] object-contain"
+            />
+          </a>
+        </div>
 
           {/* Language switcher à droite */}
-          <div className="flex-1 flex justify-end items-center text-sm text-black">
+          <div className={`flex-1 flex justify-end items-center text-sm transition-colors duration-200 ${
+            isHomePage ? "text-[#FAF5E9] sm:text-black" : "text-black"
+          }`}>
+
             <LanguageSwitcher />
           </div>
         </div>

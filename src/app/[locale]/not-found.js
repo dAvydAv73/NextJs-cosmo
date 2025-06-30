@@ -1,3 +1,4 @@
+//nextJs/src/app/[locale]/not-found.js
 import { useTranslations } from "next-intl";
 import {getMessages} from 'next-intl/server';
 

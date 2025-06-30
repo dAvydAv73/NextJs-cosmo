@@ -12,7 +12,7 @@ export const Paragraph = ({
   
   return (
     <p
-      className={`max-w-5xl mx-auto text-base opacity-90 ${
+      className={`max-w-5xl mx-auto text-base opacity-90 text-justify ${
         hasCustomClasses ? '' : 'my-6'
       } ${getTextAlign(textAlign)} ${customClasses}`}
       style={{ color: textColor }}

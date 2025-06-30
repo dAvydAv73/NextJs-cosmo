@@ -1,19 +1,9 @@
-import { slugMapEnToWp } from "./slugMap"; // 👈 mapping externe
-
-export const getSeo = async (uri, locale = "fr") => {
-  const language = locale.toUpperCase();
-
-  let effectiveUri = uri;
-
-  // Réécriture du slug côté EN si défini dans le mapping
-  if (locale === "en" && slugMapEnToWp[uri]) {
-    effectiveUri = slugMapEnToWp[uri];
-  }
-
+//utils/getSeo.js
+export const getSeo = async (uri, locale = 'fr') => {
   const params = {
     query: `
-      query SeoQuery($uri: String!, $language: LanguageCodeEnum!) {
-        nodeByUri(uri: $uri, language: $language) {
+      query PageSeo($uri: String!) {
+        nodeByUri(uri: $uri) {
           ... on Page {
             seo {
               title
@@ -23,28 +13,80 @@ export const getSeo = async (uri, locale = "fr") => {
               opengraphImage {
                 sourceUrl
               }
+              twitterTitle
+              twitterDescription
+              twitterImage {
+                sourceUrl
+              }
+            }
+            language {
+              code
+            }
+            translations {
+              uri
+              language {
+                code
+              }
+              ... on Page {
+                seo {
+                  title
+                  metaDesc
+                  opengraphTitle
+                  opengraphDescription
+                  opengraphImage {
+                    sourceUrl
+                  }
+                  twitterTitle
+                  twitterDescription
+                  twitterImage {
+                    sourceUrl
+                  }
+                }
+              }
             }
           }
         }
       }
     `,
-    variables: {
-      uri: effectiveUri,
-      language,
-    },
+    variables: { uri }
   };
 
   const response = await fetch(process.env.WP_GRAPHQL_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params)
   });
 
   const { data } = await response.json();
-  if (!data?.nodeByUri) {
+  const node = data?.nodeByUri;
+
+  if (!node) {
+    console.warn(`[getSeo] No data found for URI: ${uri}`);
     return null;
   }
-  return data.nodeByUri.seo;
+
+  const translation = node.translations.find(
+    (t) => t.language.code.toLowerCase() === locale
+  );
+  const seo = translation?.seo || node.seo;
+
+  if (!seo) {
+    console.warn(`[getSeo] No SEO found for ${uri} (${locale})`);
+    return null;
+  }
+
+  return {
+    title: seo.title || null,
+    metaDesc: seo.metaDesc || null,
+    opengraph: {
+      title: seo.opengraphTitle || seo.title,
+      description: seo.opengraphDescription || seo.metaDesc,
+      image: seo.opengraphImage?.sourceUrl || null
+    },
+    twitter: {
+      title: seo.twitterTitle || seo.opengraphTitle || seo.title,
+      description: seo.twitterDescription || seo.opengraphDescription || seo.metaDesc,
+      image: seo.twitterImage?.sourceUrl || seo.opengraphImage?.sourceUrl || null
+    }
+  };
 };

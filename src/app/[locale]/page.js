@@ -1,3 +1,4 @@
+//NextJs/src/app/[locale]/page.js
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { BlockRenderer } from "../../../components/BlockRenderer";
 import { getPage } from "../../../utils/getPage";
@@ -15,7 +16,9 @@ export default async function Home({ params: { locale } }) {
   console.log('Rendering Home component with locale:', locale);
   unstable_setRequestLocale(locale);
 
-  const slug = locale === 'en' ? "/home" : "/";
+  const slug = locale === 'en' ? "/home" : "/accueil";
+
+
   console.log('Fetching page data for slug:', slug);
 
   try {
@@ -39,69 +42,63 @@ export default async function Home({ params: { locale } }) {
   }
 }
 export async function generateMetadata({ params: { locale } }) {
-
   unstable_setRequestLocale(locale);
 
-  const slug = locale === 'en' ? "/home" : "/";
- const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
-    
+  const slug = locale === 'en' ? "/home" : "/accueil";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
+
   try {
-    const seo = await getSeo(slug);
-    
-    const alternateLanguages = locales.map(lang => ({
-      hrefLang: lang,
-      href: `${baseUrl}/${lang}` // Inclure toujours la langue dans l'URL, même pour la langue par défaut
-    }));
+    const seo = await getSeo(slug, locale);
+
+    const defaultTitle = "Cosmopolite by Chez Philippe | Genève";
+    const defaultDescription = "";
 
     return {
-      title: seo?.title || "Philippe Chevrier | Site Officiel",
-      description: seo?.metaDesc || "",
-      alternates: {
-        canonical: `${baseUrl}/${locale}`, // Ajouter la locale ici aussi
-        languages: {
-          'x-default': baseUrl, // URL par défaut sans locale
-          ...Object.fromEntries(alternateLanguages.map(({ hrefLang, href }) => [hrefLang, href]))
-        }
-      },
+      title: seo?.title || defaultTitle,
+      description: seo?.metaDesc || defaultDescription,
       openGraph: {
-        title: seo?.opengraphTitle || seo?.title || "Philippe Chevrier | Site Officiel",
-        description: seo?.opengraphDescription || seo?.metaDesc || "",
-        url: `${baseUrl}/${locale}`, // Inclure la locale dans l'URL Open Graph
-        siteName: 'Philippe Chevrier',
-        images: seo?.opengraphImage?.sourceUrl ? [{ url: seo.opengraphImage.sourceUrl }] : [],
-        locale: locale,
-        type: 'website',
+        title: seo?.opengraph.title || defaultTitle,
+        description: seo?.opengraph.description || defaultDescription,
+        images: seo?.opengraph.image ? [{ url: seo.opengraph.image }] : [],
+        url: `${baseUrl}/${locale}`,
+        siteName: "Cosmopolite",
+        locale,
+        type: "website"
       },
       twitter: {
-        card: 'summary_large_image',
-        title: seo?.opengraphTitle || seo?.title,
-        description: seo?.opengraphDescription || seo?.metaDesc,
-        images: seo?.opengraphImage?.sourceUrl ? [seo.opengraphImage.sourceUrl] : [],
+        card: "summary_large_image",
+        title: seo?.twitter.title || defaultTitle,
+        description: seo?.twitter.description || defaultDescription,
+        images: seo?.twitter.image ? [seo.twitter.image] : []
       },
-      // Balises meta pour les robots et Googlebot
       robots: {
-        index: true, // true pour autoriser l'indexation, false pour l'interdire
-        follow: true, // true pour suivre les liens, false pour l'interdire
+        index: true,
+        follow: true
       },
       additionalMetaTags: [
-        {
-          name: 'googlebot',
-          content: 'index, follow', // Directive pour Googlebot
-        },
-        {
-          name: 'robots',
-          content: 'noarchive', // Directive pour éviter la mise en cache de la page
+        { name: "googlebot", content: "index, follow" },
+        { name: "robots", content: "noarchive" }
+      ],
+      alternates: {
+        canonical: `${baseUrl}/${locale}`,
+        languages: {
+          'x-default': baseUrl,
+          ...Object.fromEntries(
+            locales.map((lang) => [lang, `${baseUrl}/${lang}`])
+          )
         }
-      ]
+      }
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
+
     return {
-      title: "Philippe Chevrier | Site Officiel",
-      description: "",
+      title: "Cosmopolite by Chez Philippe | Genève",
+      description: ""
     };
   }
 }
+
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

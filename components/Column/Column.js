@@ -1,14 +1,14 @@
-//nextJs/components/Column/Column.js
-"use client"
+// components/Column/Column.js
+"use client";
 import React, { useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 
-export const Column = React.memo(({ 
-  children, 
-  width, 
-  textColor, 
-  backgroundColor, 
-  customClasses = "", 
+export const Column = React.memo(({
+  children,
+  width,
+  textColor,
+  backgroundColor,
+  customClasses = "",
   index = 0
 }) => {
   const { ref, inView } = useInView({
@@ -16,10 +16,11 @@ export const Column = React.memo(({
     triggerOnce: true,
   });
 
+  const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
+
   const styles = useMemo(() => {
     const baseStyles = {
-      //transform: inView ? "none" : "translateY(200px)",
-      opacity: inView ? 1 : 0,
+      opacity: isMobile || inView ? 1 : 0,
       transition: `all 0.5s ease-in ${index * 0.3}s`,
     };
 
@@ -35,7 +36,7 @@ export const Column = React.memo(({
     if (backgroundColor) baseStyles.backgroundColor = backgroundColor;
 
     return baseStyles;
-  }, [inView, index, width, textColor, backgroundColor]);
+  }, [inView, index, width, textColor, backgroundColor, isMobile]);
 
   return (
     <div
@@ -48,4 +49,4 @@ export const Column = React.memo(({
   );
 });
 
-Column.displayName = 'Column';
+Column.displayName = "Column";

@@ -9,10 +9,15 @@ import { pageSlugs } from "../../../../utils/pageSlugs"; // ✅ ton nouveau fich
 
 export default async function Page({ params }) {
   const { locale, slug } = params;
-  console.log('→ Locale reçue :', locale);
 
   const uri = slug.join("/");
-  const data = await getPage(uri, locale); // ✅ locale transmise enfin correctement
+
+  console.log("→ Locale reçue :", locale);
+  console.log("→ URI :", uri);
+
+  const data = await getPage(uri, locale);
+  console.log("→ Data reçue :", data);
+
   if (!data) notFound();
 
   return <BlockRenderer blocks={data} />;
@@ -21,12 +26,59 @@ export default async function Page({ params }) {
 export async function generateMetadata({ params }) {
   const { locale, slug } = params;
   const uri = slug.join("/");
-  const seo = await getSeo(uri, locale);
-  return {
-    title: seo?.title || "",
-    description: seo?.metaDesc || "",
-  };
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
+
+  try {
+    const seo = await getSeo(uri, locale);
+
+    const defaultTitle = "Cosmopolite by Chez Philippe | Genève";
+    const defaultDescription = "";
+
+    return {
+      title: seo?.title || defaultTitle,
+      description: seo?.metaDesc || defaultDescription,
+      openGraph: {
+        title: seo?.opengraphTitle || seo?.title || defaultTitle,
+        description: seo?.opengraphDescription || seo?.metaDesc || defaultDescription,
+        images: seo?.opengraphImage?.sourceUrl ? [{ url: seo.opengraphImage.sourceUrl }] : [],
+        url: `${baseUrl}/${locale}/${uri}`,
+        siteName: "Cosmopolite",
+        locale,
+        type: "website"
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: seo?.opengraphTitle || seo?.title || defaultTitle,
+        description: seo?.opengraphDescription || seo?.metaDesc || defaultDescription,
+        images: seo?.opengraphImage?.sourceUrl ? [seo.opengraphImage.sourceUrl] : []
+      },
+      robots: {
+        index: true,
+        follow: true
+      },
+      additionalMetaTags: [
+        { name: "googlebot", content: "index, follow" },
+        { name: "robots", content: "noarchive" }
+      ],
+      alternates: {
+        canonical: `${baseUrl}/${locale}/${uri}`,
+        languages: {
+          'x-default': baseUrl,
+          ...Object.fromEntries(
+            locales.map((lang) => [lang, `${baseUrl}/${lang}/${uri}`])
+          )
+        }
+      }
+    };
+  } catch (error) {
+    console.error("Error generating metadata for", uri, error);
+    return {
+      title: "Cosmopolite by Chez Philippe | Genève",
+      description: ""
+    };
+  }
 }
+
 
 export async function generateStaticParams() {
   return locales.flatMap((locale) =>

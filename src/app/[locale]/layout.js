@@ -9,6 +9,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AppIntro from '../../../components/AppIntro/AppIntro.js'; 
 import { Footer } from '../../../components/Footer';
+import ContentWrapper from '../../../components/ContentWrapper/ContentWrapper';
 
 config.autoAddCss = false;
 
@@ -45,12 +46,10 @@ export default async function RootLayout({ children, params }) {
             callToAction2Destination={menuData.callToAction2Destination}
             items={menuData.mainMenuItems}
           />
-          <div
-              id="content"
-              className={`content ${isHomePage ? "is-home" : "not-home"}`}
-            >
+          <ContentWrapper>
             {children}
-          </div>
+          </ContentWrapper>
+
         </NextIntlClientProvider>
         {/*<Footer items={menuData.mainMenuItems} />*/}
       </AppIntro>

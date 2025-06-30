@@ -1,4 +1,4 @@
-//NextJs/components/AppIntro(AppIntro.js
+// components/AppIntro/AppIntro.js
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -31,17 +31,16 @@ export default function AppIntro({ children }) {
       setTimeout(() => {
         sessionStorage.setItem('cosmo_intro_played', 'true');
         setRevealSite(true);
-        // Délai court avant le fade-in du site
         setTimeout(() => {
           setFadeInSite(true);
-        }, 50); // 1 frame plus tard
-      }, 600); // durée du fondu
+        }, 50);
+      }, 600);
     });
   }, []);
 
   if (!revealSite) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#FAF5E9] text-[#796D64] flex items-center justify-center">
+      <div className="fixed inset-0 z-50 bg-[#FAF5E9] text-[#796D64] flex items-center justify-center pointer-events-none appintro">
         <canvas
           ref={canvasRef}
           width="1219"
@@ -56,8 +55,12 @@ export default function AppIntro({ children }) {
   }
 
   return (
-    <div className={`transition-opacity duration-700 ease-in ${fadeInSite ? 'opacity-100' : 'opacity-0'}`}>
-      {children}
-    </div>
-  );
+  <div
+    className={`transition-opacity duration-700 ease-in ${
+      fadeInSite ? 'opacity-100' : 'opacity-0'
+    }`}
+  >
+    {children}
+  </div>
+);
 }

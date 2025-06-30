@@ -15,9 +15,14 @@ import { ListItemContent } from "../ListItemContent/ListItemContent";
 import { Images2Block } from "../Images2Block/Images2Block";
 import { SliderBlock } from "../SliderBlock";
 import { formatDoubleSliderBlock } from "../../utils/formatDoubleSliderBlock";
-import { DoubleSlider } from "../DoubleSlider";
+import { ResponsiveDoubleSlider } from "../DoubleSlider/ResponsiveDoubleSlider";
 import { parseMenusFromFlatData } from "../../utils/parseFlatACF";
 import CarteMenu  from "../CarteMenu/CarteMenu";
+import GalleryWrapper from "../GalleryTabs/GalleryWrapper";
+
+import { getGalleryBlockData } from "../../utils/getGallery";
+import GalleryTabs from "../GalleryTabs/GalleryTabs";
+
 
 
 import { useEffect } from 'react';
@@ -41,6 +46,13 @@ export const BlockRenderer = ({ blocks }) => {
     //console.log(`Custom classes for block ${index}:`, customClasses); // Log pour le débogage
 
     switch (block.name) {
+      
+
+      case "cosmopolite/galleryblock": {
+        return (
+          <GalleryWrapper key={block.id} block={block} />
+        );
+      }
 
       case "cosmopolite/blockcartekmenu": {
         const { data = {} } = block.attributes || {};
@@ -55,7 +67,7 @@ export const BlockRenderer = ({ blocks }) => {
 
       case "acf/doublesliderblock": {
         const slides = formatDoubleSliderBlock(block);
-        return <DoubleSlider key={block.id} slides={slides} />;
+        return <ResponsiveDoubleSlider key={block.id} slides={slides} />;
       }
 
       case "acf/tickitem": {
