@@ -191,10 +191,10 @@ export const DoubleSlider = ({ slides }) => {
 
       {/* Navigation */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-6 z-40">
-        <button onClick={handlePrev} disabled={index === 0} className="text-white disabled:opacity-30">
+        <button onClick={handlePrev} disabled={index === 0} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 border border-white text-white disabled:opacity-30">
           ←
         </button>
-        <button onClick={handleNext} disabled={index === slides.length - 1} className="text-white disabled:opacity-30">
+        <button onClick={handleNext} disabled={index === slides.length - 1} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 border border-white text-white disabled:opacity-30">
           →
         </button>
       </div>
