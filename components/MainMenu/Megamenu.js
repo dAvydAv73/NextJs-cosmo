@@ -139,14 +139,14 @@ export const Megamenu = ({ items = [], onClose, settings }) => {
               </div>
             </div>
           )}
-          {/* Horaires d'ouverture (statique, localisé) */}
+         {/* Horaires d'ouverture (statique, localisé) */}
           <div>
             <h4 className="uppercase font-bold text-base md:text-2xl mb-1 md:mb-2">
               {isFr ? "Ouvert tous les jours" : "Open daily"}
             </h4>
             <div className="space-y-1">
-              <p>{isFr ? "Du lundi au samedi de 10h00 à 22h30" : "Monday to Saturday, 10:00 am – 10:30 pm"}</p>
-              <p>{isFr ? "Le Dimanche de 10h00 à 17h00" : "Sunday, 10:00 am – 5:00 pm"}</p>
+              <p>{isFr ? "Du lundi au samedi de 10h00 à minuit" : "Monday to Saturday, 10:00 am – midnight"}</p>
+              <p>{isFr ? "Le dimanche de 11h00 à 17h00" : "Sunday, 11:00 am – 5:00 pm"}</p>
             </div>
           </div>
 
