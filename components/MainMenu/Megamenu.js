@@ -113,6 +113,15 @@ export const Megamenu = ({ items = [], onClose, settings }) => {
                   {email}
                 </a>
               </p>
+              <p>
+                Tel.{" "}
+                <a
+                  href="tel:+41223103120"
+                  className="underline hover:text-[#B60032] duration-200"
+                >
+                  {isFr ? "+41 (0)22 310 31 20" : "+41 22 310 31 20"}
+                </a>
+              </p>
             </div>
           )}
 
@@ -136,6 +145,7 @@ export const Megamenu = ({ items = [], onClose, settings }) => {
                     )}
                   </a>
                 ))}
+
               </div>
             </div>
           )}
