@@ -1,3 +1,5 @@
+//NextJs/components/DoubleSlider/DoubleSliderMobile.js
+
 "use client";
 import { useRef, useState } from "react";
 import gsap from "gsap";

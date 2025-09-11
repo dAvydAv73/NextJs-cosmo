@@ -1,3 +1,4 @@
+//NextJs/components/DoubleSlider/ResponsiveDoubleSlider.js
 "use client";
 
 import { DoubleSlider } from "./DoubleSlider";

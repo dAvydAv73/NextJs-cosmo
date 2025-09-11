@@ -156,7 +156,7 @@ export const Megamenu = ({ items = [], onClose, settings }) => {
             </h4>
             <div className="space-y-1">
               <p>{isFr ? "Du lundi au samedi de 10h00 à minuit" : "Monday to Saturday, 10:00 am – midnight"}</p>
-              <p>{isFr ? "Le dimanche de 11h00 à 17h00" : "Sunday, 11:00 am – 5:00 pm"}</p>
+              <p>{isFr ? "Sunday Brunch de 10h30 à 16h30" : "Sunday Brunch, 10:30 am to 4:30 pm"}</p>
             </div>
           </div>
 
