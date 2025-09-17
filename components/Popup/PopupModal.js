@@ -26,7 +26,6 @@ function formatDismiss(locale, n) {
   if (locale === "en") {
     return `Don’t show again for ${n} ${n > 1 ? "days" : "day"}`;
   }
-  // FR
   return `Ne plus afficher pendant ${n} ${n > 1 ? "jours" : "jour"}`;
 }
 
@@ -88,6 +87,20 @@ export default function PopupModal({ popup }) {
     setOpen(false);
   }, [dismissDays, storageKey]);
 
+  // --- Normalisation & comportement du CTA (mailto/tel/http(s)/interne) ---
+  const { href, isExternal } = useMemo(() => {
+    const raw = content?.cta?.url?.trim() || "";
+    if (!raw) return { href: "", isExternal: false };
+
+    // www.example.com -> https://www.example.com
+    const normalized = raw.startsWith("www.") ? `https://${raw}` : raw;
+
+    // Externe = http(s) seulement. mailto:/tel: ne forcent pas _blank
+    const external = /^https?:\/\//i.test(normalized);
+
+    return { href: normalized, isExternal: external };
+  }, [content?.cta?.url]);
+
   if (!open) return null;
 
   return (
@@ -138,7 +151,7 @@ export default function PopupModal({ popup }) {
             </div>
           </div>
 
-          {/* Image desktop (même hauteur que colonne texte) */}
+          {/* Image desktop */}
           <div className="relative hidden md:block">
             {image?.sourceUrl ? (
               <img
@@ -156,7 +169,7 @@ export default function PopupModal({ popup }) {
           {/* Colonne texte */}
           <div className="bg-[#FAF5E9] p-4 md:p-10 flex flex-col">
             {content?.subtitle && (
-              <p className="uppercase tracking-[0.12em] text-sm text-neutral-600 mb-2 md:mb-4">
+              <p className="uppercase tracking-[0.12em] text-xl font-base text-neutral-800 mb-2 md:mb-4">
                 {content.subtitle}
               </p>
             )}
@@ -180,17 +193,17 @@ export default function PopupModal({ popup }) {
             )}
 
             <div className="mt-auto flex items-center">
-              {content?.cta?.enabled &&
-                content?.cta?.label &&
-                content?.cta?.url && (
-                  <a
-                    href={content.cta.url}
-                    className="inline-block border border-[#7A6D64] bg-[#7A6D64] text-[#FAF5E9]
-                               px-5 py-2 text-[11px] md:text-[12px] tracking-[0.2em] md:tracking-[0.25em] uppercase"
-                  >
-                    {content.cta.label}
-                  </a>
-                )}
+              {content?.cta?.enabled && content?.cta?.label && href && (
+                <a
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="inline-block border border-[#7A6D64] bg-[#7A6D64] text-[#FAF5E9]
+                             px-5 py-2 text-[11px] md:text-[12px] tracking-[0.2em] md:tracking-[0.25em] uppercase"
+                >
+                  {content.cta.label}
+                </a>
+              )}
             </div>
 
             {/* Lien dismiss (i18n) */}
