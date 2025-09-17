@@ -169,7 +169,7 @@ export default function PopupModal({ popup }) {
           {/* Colonne texte */}
           <div className="bg-[#FAF5E9] p-4 md:p-10 flex flex-col">
             {content?.subtitle && (
-              <p className="uppercase tracking-[0.12em] text-xl font-base text-neutral-800 mb-2 md:mb-4">
+              <p className="uppercase tracking-[0.12em] text-xl font-bold text-neutral-800 mb-2 md:mb-4">
                 {content.subtitle}
               </p>
             )}
