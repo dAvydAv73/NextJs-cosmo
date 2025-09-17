@@ -1,12 +1,13 @@
 //nextJs/src/app/[locale]/[...slug]/page.js
 // src/app/[locale]/[...slug]/page.js
-
-import { BlockRenderer } from "../../../../components/BlockRenderer";
-import { getPage } from "../../../../utils/getPage";
+import { BlockRenderer } from "@/components/BlockRenderer";
+import { getPage } from "@/utils/getPage";
+import { getSeo } from "@/utils/getSeo";
 import { notFound } from "next/navigation";
-import { getSeo } from "../../../../utils/getSeo";
 import { headers } from "next/headers";
-import { locales } from "../../../i18n";
+import { locales } from "i18n";
+import PopupModal from "@/components/Popup/PopupModal";
+import { getPopup } from "@/utils/getPopup";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -27,13 +28,22 @@ export default async function Page({ params }) {
   const { locale, slug } = params;
   const uri = slug.join("/");
 
-  const data = await getPage(uri, locale);
+  const [data, popup] = await Promise.all([
+    getPage(uri, locale),
+    getPopup(locale),
+  ]);
+
   if (!data || !Array.isArray(data)) {
     console.warn("❌ Données invalides :", data);
     return <div>Page introuvable</div>;
   }
 
-  return <BlockRenderer blocks={data} />;
+  return (
+    <>
+      <BlockRenderer blocks={data} />
+      {popup?.enabled && popup.showOn === "all" && <PopupModal popup={popup} />}
+    </>
+  );
 }
 
 export async function generateMetadata({ params }) {
@@ -84,3 +94,4 @@ export async function generateMetadata({ params }) {
     }
   };
 }
+

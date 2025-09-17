@@ -1,5 +1,12 @@
 {
-    "compilerOptions": {
-        "baseUrl": "src"
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"],
+      "@/components/*": ["components/*"],
+      "@/utils/*": ["utils/*"],
+      "@/app/*": ["src/app/*"],
+      "i18n": ["src/i18n"]
     }
+  }
 }

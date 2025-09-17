@@ -1,11 +1,15 @@
 //NextJs/src/app/[locale]/page.js
 // src/app/[locale]/page.js
+
 import { unstable_setRequestLocale } from 'next-intl/server';
-import { BlockRenderer } from "../../../components/BlockRenderer";
-import { getPage } from "../../../utils/getPage";
-import { getSeo } from "../../../utils/getSeo";
+import { BlockRenderer } from "@/components/BlockRenderer";
+import { getPage } from "@/utils/getPage";
+import { getSeo } from "@/utils/getSeo";
 import { headers } from "next/headers";
-import { locales } from "../../i18n";
+import { locales } from "i18n";
+import PopupModal from "@/components/Popup/PopupModal";
+import { getPopup } from "@/utils/getPopup";
+
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -28,14 +32,25 @@ export default async function Home({ params: { locale } }) {
   const slug = locale === "en" ? "home" : "accueil";
 
   try {
-    const data = await getPage(slug);
+    const [data, popup] = await Promise.all([
+      getPage(slug),
+      getPopup(locale),
+    ]);
+    console.log("POPUP DEBUG ->", JSON.stringify(popup, null, 2));
 
     if (!data || !Array.isArray(data)) {
       console.warn("❌ Données invalides :", data);
       return <div>Page introuvable</div>;
     }
 
-    return <BlockRenderer blocks={data} />;
+    return (
+      <>
+        <BlockRenderer blocks={data} />
+        {popup?.enabled && (popup.showOn === "home" || popup.showOn === "all") && (
+          <PopupModal popup={popup} />
+        )}
+      </>
+    );
   } catch (error) {
     console.error("❌ Erreur dans Home :", error);
     return <div>Erreur serveur</div>;
