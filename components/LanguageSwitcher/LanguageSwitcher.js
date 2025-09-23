@@ -23,14 +23,14 @@ export const LanguageSwitcher = () => {
         <div className="flex langSwitcher border-none items-center	">
             <a 
                 href={getOtherLangPath(pathname, 'fr')}
-                className={`px-1 py-1 ${currentLang === 'fr' ? 'underline' : ''}`}
+                className={`px-1 py-1 text-[9px] md:text-[12px] ${currentLang === 'fr' ? 'underline' : ''}`}
             >
                 FR
             </a>
             <span>&nbsp;|&nbsp;</span>
             <a 
                 href={getOtherLangPath(pathname, 'en')}
-                className={`px-1 py-1 ${currentLang === 'en' ? 'underline' : ''}`}
+                className={`px-1 py-1 text-[9px] md:text-[12px] ${currentLang === 'en' ? 'underline' : ''}`}
             >
                 EN
             </a>

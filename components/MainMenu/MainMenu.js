@@ -47,11 +47,11 @@ export const MainMenu = ({ items = [], websiteSettings = {} }) => {
           isHomePage ? "bg-transparent" : `bg-[#FAF5E9] ${hasScrolled ? "shadow-md" : ""}`
         }`}
       >
-        <div className="container mx-auto px-5 flex items-center justify-between h-full">
+        <div className="container mx-auto px-2 sm:px-5 lg:px-5 flex items-center justify-between h-full">
           {/* Burger à gauche */}
           <button
             onClick={toggleMenu}
-            className={`text-2xl mr-4 transition-colors duration-200 ${
+            className={`text-2xl mr-2 lg:mr-4 transition-colors duration-200 ${
               isHomePage ? "text-[#FAF5E9]" : "text-black"
             }`}
             aria-label="Ouvrir le menu"
@@ -66,7 +66,7 @@ export const MainMenu = ({ items = [], websiteSettings = {} }) => {
                 priority
                 src={isHomePage ? LogoIconWhite : LogoIcon}
                 alt="Le Cosmopolite"
-                className="h-[60px] sm:h-[70px] lg:h-[80px] max-w-[220px] object-contain"
+                className="h-[28px] sm:h-[70px] lg:h-[80px] max-w-[220px] object-contain"
               />
             </a>
           </div>
@@ -83,7 +83,7 @@ export const MainMenu = ({ items = [], websiteSettings = {} }) => {
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block border border-[#7A6D64] bg-[#7A6D64] text-[#FAF5E9] px-5 py-2 text-[11px] md:text-[12px] tracking-[0.2em] md:tracking-[0.25em] uppercase mr-3"
+                className="inline-block border border-[#7A6D64] bg-[#7A6D64] text-[#FAF5E9] px-2 py-2 lg:px-5 text-[9px] md:text-[12px] tracking-[0.2em] md:tracking-[0.25em] uppercase mr-2"
                 aria-label={bookingLabel}
               >
                 {bookingLabel}
