@@ -12,6 +12,7 @@ export const getWebsiteSettings = async (locale = 'fr') => {
             titleContactEn
             titleFindEn
             titleFollowEn
+            bookingUrlEn
           }
           frLang {
             addressFr
@@ -20,6 +21,7 @@ export const getWebsiteSettings = async (locale = 'fr') => {
             titleContactFr
             titleFindFr
             titleFollowFr
+            bookingUrlFr
           }
           logoDroit {
             sourceUrl

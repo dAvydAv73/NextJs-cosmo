@@ -35,7 +35,7 @@ export default async function Home({ params: { locale } }) {
       getPage(slug),
       getPopup(locale),
     ]);
-    console.log("POPUP DEBUG ->", JSON.stringify(popup, null, 2));
+    //console.log("POPUP DEBUG ->", JSON.stringify(popup, null, 2));
 
     if (!data || !Array.isArray(data)) {
       console.warn("❌ Données invalides :", data);
