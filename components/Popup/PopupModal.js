@@ -46,14 +46,15 @@ export default function PopupModal({ popup }) {
   const storageKey = useMemo(() => keyFromVersion(startDate), [startDate]);
   const dismissLabel = formatDismiss(locale, dismissDays);
 
-  // Conditions d’ouverture
+  // Conditions d’ouverture (lecture LS uniquement)
   useEffect(() => {
     if (!enabled) return;
     if (!isWithinWindow(startDate, endDate)) return;
     if (typeof window === "undefined") return;
 
     const until = window.localStorage.getItem(storageKey);
-    if (until && Number(until) > Date.now()) return; // déjà “dismissed”
+    if (until === "forever") return;                 // compat ancien mode
+    if (until && Number(until) > Date.now()) return; // pause active
     setOpen(true);
   }, [enabled, startDate, endDate, storageKey]);
 
@@ -79,7 +80,13 @@ export default function PopupModal({ popup }) {
     };
   }, [open]);
 
+  // Fermer = sans persistance
   const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  // Ne plus afficher pendant X jours = persistance
+  const handleDismissForDays = useCallback(() => {
     if (typeof window !== "undefined") {
       const until = Date.now() + dismissDays * 24 * 60 * 60 * 1000;
       window.localStorage.setItem(storageKey, String(until));
@@ -87,16 +94,13 @@ export default function PopupModal({ popup }) {
     setOpen(false);
   }, [dismissDays, storageKey]);
 
-  // --- Normalisation & comportement du CTA (mailto/tel/http(s)/interne) ---
+  // Normalisation & comportement du CTA
   const { href, isExternal } = useMemo(() => {
     const raw = content?.cta?.url?.trim() || "";
     if (!raw) return { href: "", isExternal: false };
 
-    // www.example.com -> https://www.example.com
     const normalized = raw.startsWith("www.") ? `https://${raw}` : raw;
-
-    // Externe = http(s) seulement. mailto:/tel: ne forcent pas _blank
-    const external = /^https?:\/\//i.test(normalized);
+    const external = /^https?:\/\//i.test(normalized); // mailto/tel ne forcent pas _blank
 
     return { href: normalized, isExternal: external };
   }, [content?.cta?.url]);
@@ -209,7 +213,7 @@ export default function PopupModal({ popup }) {
             {/* Lien dismiss (i18n) */}
             <button
               type="button"
-              onClick={handleClose}
+              onClick={handleDismissForDays}
               className="mt-3 self-start text-[11px] underline underline-offset-4 text-black/40 hover:text-black/60 transition"
             >
               {dismissLabel}
