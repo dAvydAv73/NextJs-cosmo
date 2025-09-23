@@ -10,7 +10,6 @@ import { locales } from "i18n";
 import PopupModal from "@/components/Popup/PopupModal";
 import { getPopup } from "@/utils/getPopup";
 
-
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
